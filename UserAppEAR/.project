@@ -5,6 +5,7 @@
 	<projects>
 		<project>UserApp</project>
 		<project>UserAppClient</project>
+		<project>UserAppWar</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -8,5 +8,9 @@
         <dependent-module archiveName="UserAppClient.jar" deploy-path="/" handle="module:/resource/UserAppClient/UserAppClient">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="UserAppWar.war" deploy-path="/" handle="module:/resource/UserAppWar/UserAppWar">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>

@@ -3,6 +3,7 @@ package model;
 public class User {
 	
 	
+	private String id;
 	private String username;
 	private String firstName;
 	private String lastName;
@@ -11,6 +12,12 @@ public class User {
 	
 	
 	public User() {
+	}
+
+
+	public User(String username, String password) {
+		this.username = username;
+		this.password = password;
 	}
 
 
@@ -63,9 +70,19 @@ public class User {
 		this.password = password;
 	}
 	
+	public void setId(String id) {
+		this.id = id;
+	}
+
+
+	public String getId() {
+		return id;
+	}
+
 	
-	
-	
+	public String toString() {
+		return username + "  " + password + "  " + firstName + "  " + lastName;
+	}
 	
 	
 
