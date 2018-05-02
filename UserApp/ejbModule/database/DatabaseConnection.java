@@ -39,4 +39,8 @@ public class DatabaseConnection {
 	public MongoCollection<Document> getUsers() {
 		return mongoClient.getDatabase("agentidb").getCollection("User");
 	}
+	
+	public MongoCollection<Document> getFriends() {
+		return mongoClient.getDatabase("agentidb").getCollection("Friends");
+	}
 }

@@ -2,8 +2,12 @@
 
 angular.module('chatApp').factory('UserService', ['$websocket', '$q', 'urls',
     function ($websocket, $q, urls) {
-        var ws = $websocket("ws://"+"localhost:8080/ChatAppWar/rest/usersEndPoint");
+        var ws =new WebSocket("ws://"+"localhost:8080/ChatAppWar/rest/usersEndPoint");
        
+        ws.onOpen(function () {
+            console.log('connection open');
+            ws.send('HELLO SERVER');
+        });
 
         ws.onMessage(function (event) {
             console.log('message: ', event.data);
@@ -14,10 +18,7 @@ angular.module('chatApp').factory('UserService', ['$websocket', '$q', 'urls',
         ws.onClose(function (event) {
             console.log('connection closed', event);
         });
-        ws.onOpen(function () {
-            console.log('connection open');
-            ws.send('HELLO SERVER');
-        });
+       
 
         var factory = {
             send: send,
