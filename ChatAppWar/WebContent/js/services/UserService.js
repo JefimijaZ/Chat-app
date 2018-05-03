@@ -2,7 +2,7 @@
 
 angular.module('chatApp').factory('UserService', ['$websocket', '$q', 'urls',
     function ($websocket, $q, urls) {
-        var ws =new WebSocket("ws://"+"localhost:8080/ChatAppWar/rest/usersEndPoint");
+        var ws =$websocket("ws://"+ document.location.host +"/ChatAppWar/usersEndPoint");
        
         ws.onOpen(function () {
             console.log('connection open');
