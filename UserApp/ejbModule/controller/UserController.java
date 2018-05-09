@@ -86,7 +86,7 @@ public class UserController {
 	@PUT
 	@Path("/save")
 	public int save(User user) {
-		repository.save(user);
+		//repository.save(user);
 		return HttpServletResponse.SC_OK;
 	}
 
