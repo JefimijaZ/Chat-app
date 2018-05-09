@@ -9,7 +9,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {
         console.log("usao da namesti state");
         $stateProvider
-            .state('home-abstarct', {
+            .state('home-abstract', {
                 abstract: true,
                 views: {
                     '@': {
@@ -69,7 +69,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
                         templateUrl: '/ChatAppWar/templates/friends-abstract-search.html'
                     }
                 }
-            })
-            $urlRouterProvider.otherwise('/');
+            });
+            $urlRouterProvider.otherwise('/register');
     }
 ]);
