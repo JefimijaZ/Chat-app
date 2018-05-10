@@ -11,7 +11,7 @@ import javax.ws.rs.client.ClientBuilder;
 
 import org.jboss.resteasy.util.GenericType;
 
-import model.Const;
+import model.Configuration;
 import model.Host;
 import model.User;
 
@@ -27,22 +27,24 @@ public class ClusterInit {
 	@PostConstruct
 	public void init() {
 
-		if (!Const.masterNode.equals("master")) {
+		if (!Configuration.masterAdress.equals(Configuration.localAdress)) {
 			System.out.println("Not master");
-			alias = (ClientBuilder.newClient().target("http://" + Const.masterAdress + "/UserAppWar/rest/cluster"))
+			alias = (ClientBuilder.newClient().target("http://" + Configuration.masterAdress + "/UserAppWar/rest/cluster"))
 					.request().post(null).readEntity(String.class);
 			System.out.println("registered");
-			hosts = (ClientBuilder.newClient().target("http://" + Const.masterAdress + "/UserAppWar/cluster")).request()
+			hosts = (ClientBuilder.newClient().target("http://" + Configuration.masterAdress + "/UserAppWar/cluster")).request()
 					.get().readEntity((Class<HashMap<String, Host>>)(Class<?>)HashMap.class);
-			activeUsers = (ClientBuilder.newClient().target("http://" + Const.masterAdress + "/UserAppWar/user/active"))
+			System.out.println("HOSTS: " + hosts.size());
+			activeUsers = (ClientBuilder.newClient().target("http://" + Configuration.masterAdress + "/UserAppWar/user/active"))
 					.request().get().readEntity(List.class);
+			System.out.println("ACTIVE USERS: " + activeUsers.size());
 		}
 	}
 
 	@PreDestroy
 	public void destroy() {
-		if (!Const.masterNode.equals("master")) {
-			(ClientBuilder.newClient().target("http://" + Const.masterAdress + "/UserAppWar/rest/cluster/" + alias))
+		if (!Configuration.masterAdress.equals(Configuration.localAdress)) {
+			(ClientBuilder.newClient().target("http://" + Configuration.masterAdress + "/UserAppWar/rest/cluster/" + alias))
 					.request().delete();
 		}
 	}

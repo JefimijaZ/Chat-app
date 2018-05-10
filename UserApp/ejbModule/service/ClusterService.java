@@ -43,4 +43,8 @@ public class ClusterService {
 					target("http://"+h.getAddress()+"/ChatAppWar/rest/cluster/" +alias)).request().delete();
 		}
 	}
+	
+	public HashMap<String, Host> getHosts() {		
+		return hosts;
+	}
 }

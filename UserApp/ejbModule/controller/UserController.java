@@ -46,10 +46,12 @@ public class UserController {
 	@POST
 	@Path("/login")
 	public boolean login(@Context HttpServletRequest request, User user) {
+		System.out.println(user);
 		List<User> users = repository.getUsers();
 		for (User u : activeUsers.getActiveUsers()) {
 			if (u.getUsername().equals(user.getUsername())) {
 				activeUser = user;
+				System.out.println(false);
 				return false;
 			}
 		}
@@ -57,10 +59,12 @@ public class UserController {
 			if (u.getUsername().equals(user.getUsername()) && u.getPassword().equals(user.getPassword())) {
 				activeUsers.login(user);
 				activeUser = user;
+				System.out.println(true);
 				return true;
 			}
 		}
 		activeUser = null;
+		System.out.println(false);
 		return false;
 	}
 

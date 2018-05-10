@@ -8,11 +8,6 @@ angular.module('chatApp').controller('HomeController',['$scope', '$rootScope', '
     self.login = login;
 
     function login(){
-        UserService.send("Login,"+self.credentials).then(
-            function(response){
-                console.log("Ulogovan je");
-                $state.go("home-abstract.profile-abstract.profile-overview({username:self.credentials.username})");
-            }
-        );
+        UserService.send("Login,"+self.credentials.username + "," +self.credentials.password );
     }
 }]);
