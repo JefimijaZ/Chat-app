@@ -32,10 +32,10 @@ public class ClusterInit {
 			alias = (ClientBuilder.newClient().target("http://" + Configuration.masterAdress + "/UserAppWar/rest/cluster"))
 					.request().post(null).readEntity(String.class);
 			System.out.println("registered");
-			hosts = (ClientBuilder.newClient().target("http://" + Configuration.masterAdress + "/UserAppWar/cluster")).request()
+			hosts = (ClientBuilder.newClient().target("http://" + Configuration.masterAdress + "/UserAppWar/rest/cluster")).request()
 					.get().readEntity((Class<HashMap<String, Host>>)(Class<?>)HashMap.class);
 			System.out.println("HOSTS: " + hosts.size());
-			activeUsers = (ClientBuilder.newClient().target("http://" + Configuration.masterAdress + "/UserAppWar/user/active"))
+			activeUsers = (ClientBuilder.newClient().target("http://" + Configuration.masterAdress + "/UserAppWar/rest/user/active"))
 					.request().get().readEntity(List.class);
 			System.out.println("ACTIVE USERS: " + activeUsers.size());
 		}
@@ -44,6 +44,7 @@ public class ClusterInit {
 	@PreDestroy
 	public void destroy() {
 		if (!Configuration.masterAdress.equals(Configuration.localAdress)) {
+			System.out.println("unregistered");
 			(ClientBuilder.newClient().target("http://" + Configuration.masterAdress + "/UserAppWar/rest/cluster/" + alias))
 					.request().delete();
 		}

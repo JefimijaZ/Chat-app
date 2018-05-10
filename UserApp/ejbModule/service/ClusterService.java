@@ -44,7 +44,8 @@ public class ClusterService {
 		}
 	}
 	
-	public HashMap<String, Host> getHosts() {		
+	public HashMap<String, Host> getHosts() {
+		System.out.println("GET HOSTS: " + hosts);
 		return hosts;
 	}
 }
