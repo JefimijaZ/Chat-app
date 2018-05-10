@@ -24,7 +24,7 @@ public class UserRepository {
 		
 		while (collection.hasNext()) {
 		  obj = collection.next();
-		  user = new User(obj.getString("username"), obj.getString("password"));
+		  user = new User(obj.getString("username"),obj.getString("firstName"), obj.getString("lastName"), obj.getString("password"));
 		  users.add(user);
 		}		
 		return users;		

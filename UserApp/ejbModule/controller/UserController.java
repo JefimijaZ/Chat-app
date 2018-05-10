@@ -1,9 +1,7 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.enterprise.context.SessionScoped;
@@ -14,6 +12,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -48,13 +47,13 @@ public class UserController {
 	public boolean login(@Context HttpServletRequest request, User user) {
 		System.out.println(user);
 		List<User> users = repository.getUsers();
-		for (User u : activeUsers.getActiveUsers()) {
+	/*	for (User u : activeUsers.getActiveUsers()) {
 			if (u.getUsername().equals(user.getUsername())) {
 				activeUser = user;
 				System.out.println(false);
 				return false;
 			}
-		}
+		}*/
 		for (User u : users) {
 			if (u.getUsername().equals(user.getUsername()) && u.getPassword().equals(user.getPassword())) {
 				activeUsers.login(user);
@@ -86,7 +85,13 @@ public class UserController {
 	public List<User> getUsers() {
 		return repository.getUsers();
 	}
-
+	@GET
+	@Path("/{username}")
+	public User getUser(@PathParam("username") String username){
+		System.out.println("Dobijeni korisnik:"+repository.getUser(username));
+		return repository.getUser(username);
+	}
+	
 	@PUT
 	@Path("/save")
 	public int save(User user) {

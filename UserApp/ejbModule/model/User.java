@@ -88,6 +88,16 @@ public class User {
 	}
 
 
+	public User(String username, String firstName, String lastName, String password) {
+		super();
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		//this.host = host;
+		this.password = password;
+	}
+
+
 	public String toString() {
 		return username + "  " + password + "  " + firstName + "  " + lastName;
 	}

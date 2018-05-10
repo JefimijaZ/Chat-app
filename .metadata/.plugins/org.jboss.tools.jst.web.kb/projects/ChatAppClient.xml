@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kb-project>
+ <depends-on-projects/>
+ <used-by-projects>
+  <project name="ChatApp"/>
+ </used-by-projects>
+ <paths>
+  <path value="C:/Users/Neven/Desktop/temp/ChatAppEAR/EarContent/lib/mongodb-driver-3.6.3.jar"/>
+ </paths>
+ <validation>
+  <el/>
+ </validation>
+ <aliases/>
+ <includes/>
+ <uris/>
+</kb-project>

@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('chatApp').factory('UserService', ['$websocket', '$q', 'urls',
-    function ($websocket, $q, urls) {
-        var ws =$websocket("ws://"+ document.location.host +"/ChatAppWar/usersEndPoint");
-       
+angular.module('chatApp').factory('UserService', ['$websocket', '$q', '$rootScope', '$state', 'urls',
+    function ($websocket, $q, $rootScope, $state, urls) {
+        var ws = $websocket("ws://" + document.location.host + "/ChatAppWar/usersEndPoint");
+
         ws.onOpen(function () {
             console.log('connection open');
             ws.send('HELLO SERVER');
@@ -11,14 +11,32 @@ angular.module('chatApp').factory('UserService', ['$websocket', '$q', 'urls',
 
         ws.onMessage(function (event) {
             console.log('message: ', event.data);
+            var command = event.data.split(",")[0];
+            switch (command) {
+                case "login":
+                    if (event.data.split(",")[1] === "true") {
+                        $rootScope.globals = {                
+                            currentUser: {                    
+                                username: event.data.split(",")[2]
+                                       
+                            }
+                        
+                        }
+                        console.log($rootScope.globals);
+                        console.log($rootScope.globals.currentUser.username);
+                        $state.go('home-abstract.profile-abstract.profile-overview', {
+                            username: $rootScope.globals.currentUser.username
+                        });
+                    }
+            }
             var response;
-           
+
             console.log(event.data);
         });
         ws.onClose(function (event) {
             console.log('connection closed', event);
         });
-       
+
 
         var factory = {
             send: send,

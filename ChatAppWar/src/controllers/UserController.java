@@ -29,7 +29,7 @@ public class UserController {
 			response = ((ResteasyWebTarget)ClientBuilder.newClient().
 					target("http://"+"localhost:8080"+"/UserAppWar/rest/user/login")).request().post(Entity.json(user)).readEntity(String.class);;	
 					System.out.println("RESPONSE:" + response);
-			return response;
+			return "login,"+response+","+username;
 			case "Register": 
 				username = message.split(",")[1]; 
 				password = message.split(",")[2];
@@ -42,8 +42,11 @@ public class UserController {
 						target("http://"+"localhost:8080"+"/UserAppWar/rest/user/login")).request().post(Entity.json(user)).readEntity(String.class);;	
 						System.out.println("RESPONSE:" + response);
 				return response;
-			
-			
+			case "User":
+				response = ((ResteasyWebTarget)ClientBuilder.newClient().
+						target("http://"+"localhost:8080"+"/UserAppWar/rest/user/"+ message.split(",")[1])).request().get(String.class);	
+						System.out.println("RESPONSE:" + response);
+				return response;
 		}
         return "heej";
     }
