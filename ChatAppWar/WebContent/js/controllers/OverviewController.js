@@ -17,8 +17,4 @@ angular.module('chatApp').controller('OverviewController', ['$scope', '$websocke
         self.currentUser = JSON.parse(event.data);
         
     });
-    ws.onClose(function (event) {
-        console.log('connection closed', event);
-        ws.send("Logout,"+$rootScope.globals.currentUser.username);
-    });
 }]);

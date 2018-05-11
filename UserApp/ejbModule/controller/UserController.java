@@ -47,16 +47,8 @@ public class UserController {
 	public boolean login(User user) {
 		System.out.println(user);
 		List<User> users = repository.getUsers();
-
-		for (User u : activeUsers.getActiveUsers()) {
-			if (u.getUsername().equals(user.getUsername())) {
-				activeUser = user;
-				System.out.println("vec ulogovan taj korisnik"+false);
-				return false;
-			}
-		}
 		for (User u : users) {
-			if (u.getUsername().equals(user.getUsername())) {
+			if (u.getUsername().equals(user.getUsername()) && u.getPassword().equals(user.getPassword())) {
 				activeUsers.login(user);
 				activeUser = user;
 				return true;
@@ -91,24 +83,6 @@ public class UserController {
 		System.out.println("Dobijeni korisnik:" + repository.getUser(username));
 		return repository.getUser(username);
 	}
-
-	@GET
-	@Path("/logout/{username}")
-	public boolean logoutUser(@PathParam("username") String username){
-		System.out.println("Usao u userApp i izbacujem usera:");
-		for (User temp : activeUsers.getActiveUsers()) {
-			if (temp.getUsername().equals(username)) {
-				System.out.println(temp.getUsername());
-				activeUsers.logout(temp);
-				activeUser = null;
-				return true;
-			}
-		}
-		return false;
-	}
-
-
-
 
 	@PUT
 	@Path("/register")

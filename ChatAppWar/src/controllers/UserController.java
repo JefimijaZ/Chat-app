@@ -38,15 +38,6 @@ public class UserController {
 						System.out.println("RESPONSE:" + response);
 						userService.login(user);
 						System.out.println("RESPONSE:" + response);
-<<<<<<< HEAD
-				return response;
-			case "Logout":
-				System.out.println("Usao u logout i gadjam"+" http://"+"localhost:8080"+"/UserAppWar/rest/user/logout"+ message.split(",")[1]);
-				response = ((ResteasyWebTarget)ClientBuilder.newClient().
-						target("http://"+"localhost:8080"+"/UserAppWar/rest/user/logout/"+ message.split(",")[1])).request().get(String.class);	
-						System.out.println("RESPONSE:" + response);
-				return "logout,"+response;
-=======
 				return "login," + response + "," + username;
 			}
 			break;
@@ -70,7 +61,6 @@ public class UserController {
 							.get(String.class);
 			System.out.println("RESPONSE:" + response);
 			return response;
->>>>>>> localMerge
 		}
 		return "heej";
 	}
