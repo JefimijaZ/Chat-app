@@ -1,9 +1,14 @@
 var app = angular.module('chatApp', ['ui.router', 'ngWebSocket']);
-app.run(function ($rootScope, $trace, $transitions) {
+app.run(function ($rootScope, $trace, $transitions, UserService) {
     //$trace.enable('TRANSITION');
+    window.addEventListener("beforeunload", function (e) {
+        UserService.send("Logout,"+$rootScope.globals.currentUser.username);
+        //Webkit, Safari, Chrome
+      });
+    
     $rootScope.globals = {                
         currentUser: {                    
-            username: undefined    
+            username: null
         }                          
     };
     $transitions.onStart({ to: 'home-abstract.register' }, function(trans) {
@@ -15,6 +20,20 @@ app.run(function ($rootScope, $trace, $transitions) {
             $rootScope.globals = {};
         }
     });
+    $rootScope.$on('$destroy', function() {
+        console.log("Unistio se window");
+        UserService.send("Logout,"+$rootScope.globals.currentUser.username);
+     });
+    $transitions.onBefore({}, function(transition) {
+        // check if the state should be protected
+        console.log("Usao u onBefore");
+
+        if (($rootScope.globals.currentUser.username == null || $rootScope.globals.currentUser.username == undefined) && transition.to().name !== 'home-abstract.register') {
+          // redirect to the 'login' state
+          console.log("User nije logovan pa prelazi na stranicu regiser");
+          return transition.router.stateService.target('home-abstract.register');
+        }
+      });
 });
 app.constant('urls', {
     USER_SERVICE_API: 'http://localhost:8080/SpringBootCRUDApp/api/user/',

@@ -28,6 +28,7 @@ angular.module('chatApp').factory('UserService', ['$websocket', '$q', '$rootScop
                             username: $rootScope.globals.currentUser.username
                         });
                     }
+                
             }
             var response;
 
@@ -35,6 +36,7 @@ angular.module('chatApp').factory('UserService', ['$websocket', '$q', '$rootScop
         });
         ws.onClose(function (event) {
             console.log('connection closed', event);
+            ws.send("Logout,"+$rootScope.globals.currentUser.username);
         });
 
 

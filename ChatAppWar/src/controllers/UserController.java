@@ -47,6 +47,12 @@ public class UserController {
 						target("http://"+"localhost:8080"+"/UserAppWar/rest/user/"+ message.split(",")[1])).request().get(String.class);	
 						System.out.println("RESPONSE:" + response);
 				return response;
+			case "Logout":
+				System.out.println("Usao u logout i gadjam"+" http://"+"localhost:8080"+"/UserAppWar/rest/user/logout"+ message.split(",")[1]);
+				response = ((ResteasyWebTarget)ClientBuilder.newClient().
+						target("http://"+"localhost:8080"+"/UserAppWar/rest/user/logout/"+ message.split(",")[1])).request().get(String.class);	
+						System.out.println("RESPONSE:" + response);
+				return "logout,"+response;
 		}
         return "heej";
     }

@@ -47,13 +47,13 @@ public class UserController {
 	public boolean login(@Context HttpServletRequest request, User user) {
 		System.out.println(user);
 		List<User> users = repository.getUsers();
-	/*	for (User u : activeUsers.getActiveUsers()) {
+		for (User u : activeUsers.getActiveUsers()) {
 			if (u.getUsername().equals(user.getUsername())) {
 				activeUser = user;
-				System.out.println(false);
+				System.out.println("vec ulogovan taj korisnik"+false);
 				return false;
 			}
-		}*/
+		}
 		for (User u : users) {
 			if (u.getUsername().equals(user.getUsername()) && u.getPassword().equals(user.getPassword())) {
 				activeUsers.login(user);
@@ -90,6 +90,20 @@ public class UserController {
 	public User getUser(@PathParam("username") String username){
 		System.out.println("Dobijeni korisnik:"+repository.getUser(username));
 		return repository.getUser(username);
+	}
+	@GET
+	@Path("/logout/{username}")
+	public boolean logoutUser(@PathParam("username") String username){
+		System.out.println("Usao u userApp i izbacujem usera:");
+		for (User temp : activeUsers.getActiveUsers()) {
+			if (temp.getUsername().equals(username)) {
+				System.out.println(temp.getUsername());
+				activeUsers.logout(temp);
+				activeUser = null;
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	@PUT
