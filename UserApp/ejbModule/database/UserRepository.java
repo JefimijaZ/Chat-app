@@ -48,6 +48,15 @@ public class UserRepository {
 		return users;
 	}
 	
+	public void save(User user) {
+		Document doc = new Document();
+		doc.put("username", user.getUsername());
+		doc.put("password", user.getPassword());
+		doc.put("firstName", user.getFirstName());
+		doc.put("lastName", user.getLastName());
+		connection.getUsers().insertOne(doc);
+	}
+	
 	
 
 }

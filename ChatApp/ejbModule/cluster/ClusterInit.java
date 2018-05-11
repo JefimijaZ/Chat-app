@@ -49,4 +49,32 @@ public class ClusterInit {
 					.request().delete();
 		}
 	}
+
+	public String getAlias() {
+		return alias;
+	}
+
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
+
+	public List<User> getActiveUsers() {
+		return activeUsers;
+	}
+
+	public void setActiveUsers(List<User> activeUsers) {
+		this.activeUsers = activeUsers;
+	}
+
+	public HashMap<String, Host> getHosts() {
+		return hosts;
+	}
+
+	public void setHosts(HashMap<String, Host> hosts) {
+		this.hosts = hosts;
+	}
+	
+	
+	
+	
 }

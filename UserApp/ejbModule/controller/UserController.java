@@ -44,9 +44,10 @@ public class UserController {
 
 	@POST
 	@Path("/login")
-	public boolean login(@Context HttpServletRequest request, User user) {
+	public boolean login(User user) {
 		System.out.println(user);
 		List<User> users = repository.getUsers();
+
 		for (User u : activeUsers.getActiveUsers()) {
 			if (u.getUsername().equals(user.getUsername())) {
 				activeUser = user;
@@ -55,21 +56,19 @@ public class UserController {
 			}
 		}
 		for (User u : users) {
-			if (u.getUsername().equals(user.getUsername()) && u.getPassword().equals(user.getPassword())) {
+			if (u.getUsername().equals(user.getUsername())) {
 				activeUsers.login(user);
 				activeUser = user;
-				System.out.println(true);
 				return true;
 			}
 		}
 		activeUser = null;
-		System.out.println(false);
 		return false;
 	}
 
 	@POST
 	@Path("/logout")
-	public boolean logout(@Context HttpServletRequest request, User user) {
+	public boolean logout(User user) {
 		for (User temp : activeUsers.getActiveUsers()) {
 			if (temp.getUsername().equals(user.getUsername())) {
 				activeUsers.logout(temp);
@@ -85,12 +84,14 @@ public class UserController {
 	public List<User> getUsers() {
 		return repository.getUsers();
 	}
+
 	@GET
 	@Path("/{username}")
-	public User getUser(@PathParam("username") String username){
-		System.out.println("Dobijeni korisnik:"+repository.getUser(username));
+	public User getUser(@PathParam("username") String username) {
+		System.out.println("Dobijeni korisnik:" + repository.getUser(username));
 		return repository.getUser(username);
 	}
+
 	@GET
 	@Path("/logout/{username}")
 	public boolean logoutUser(@PathParam("username") String username){
@@ -105,11 +106,14 @@ public class UserController {
 		}
 		return false;
 	}
-	
+
+
+
+
 	@PUT
-	@Path("/save")
-	public int save(User user) {
-		//repository.save(user);
+	@Path("/register")
+	public int register(User user) {
+		repository.save(user);
 		return HttpServletResponse.SC_OK;
 	}
 
