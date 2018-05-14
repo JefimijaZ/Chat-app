@@ -30,5 +30,11 @@ public class Host {
 	public void setAlias(String alias) {
 		this.alias = alias;
 	}
+
+	@Override
+	public String toString() {
+		return "Host [address=" + address + ", alias=" + alias + "]";
+	}
+	
 	
 }

@@ -1,9 +1,10 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
 	
 
 	private String username;
@@ -23,8 +24,9 @@ public class User {
 	public User(String username, String password) {
 		this.username = username;
 		this.password = password;
-		this.friends = new ArrayList<String>();
 	}
+	
+
 
 
 	public String getUsername() {
@@ -95,6 +97,7 @@ public class User {
 		this.lastName = lastName;
 		//this.host = host;
 		this.password = password;
+		this.friends = new ArrayList<>();
 	}
 
 

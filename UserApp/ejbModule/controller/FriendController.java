@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -14,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import database.FriendRepository;
+import model.Friends;
 import model.User;
 
 @Path("/friend")
@@ -34,16 +34,19 @@ public class FriendController {
 	
 	@PUT
 	@Path("/add")
-	public int addFriend(String userOne, String userTwo) {
-		friendRepository.addFriend(userOne, userTwo);
-		return HttpServletResponse.SC_OK;
+	public boolean addFriend(Friends friend) {
+		friendRepository.addFriend(friend.getUserOne(), friend.getUserTwo());
+		
+		return true;
 	}
 	
 	@DELETE
 	@Path("/remove")
-	public int removeFriend(String userOne, String userTwo) {
-		friendRepository.addFriend(userOne, userTwo);
-		return HttpServletResponse.SC_OK;
+	public boolean removeFriend(Friends friend) {
+		friendRepository.addFriend(friend.getUserOne(), friend.getUserTwo());
+		return true;
 	}
+	
+	
 	
 }

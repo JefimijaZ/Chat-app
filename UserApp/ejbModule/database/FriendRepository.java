@@ -33,7 +33,7 @@ public class FriendRepository {
 		
 		while (collection.hasNext()) {
 		  obj = collection.next();
-		  user = new Friends(obj.getString("usernameOne"), obj.getString("usernameTwo"));
+		  user = new Friends(obj.getString("userOne"), obj.getString("userTwo"));
 		  users.add(user);
 		}		
 		return users;		
@@ -60,7 +60,7 @@ public class FriendRepository {
 		Document doc = new Document();
 		doc.put("userOne", userOne);
 		doc.put("userTwo", userTwo);
-		connection.getUsers().insertOne(doc);
+		connection.getFriends().insertOne(doc);
 		return true;
 	}
 	

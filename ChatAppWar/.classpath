@@ -13,6 +13,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="/ChatApp"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ChatApp"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

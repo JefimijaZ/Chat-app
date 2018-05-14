@@ -28,7 +28,7 @@ public class ClusterInit {
 	public void init() {
 
 		if (!Configuration.masterAdress.equals(Configuration.localAdress)) {
-			System.out.println("Not master");
+			System.out.println("*****************Not master************************");
 			alias = (ClientBuilder.newClient().target("http://" + Configuration.masterAdress + "/UserAppWar/rest/cluster"))
 					.request().post(null).readEntity(String.class);
 			System.out.println("registered");

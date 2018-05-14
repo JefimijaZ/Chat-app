@@ -19,11 +19,21 @@ public class User {
 		this.friends = new ArrayList<String>();
 	}
 
+	
+
+	public User(String username, String firstName, String lastName, String password) {
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.password = password;
+		this.friends = new ArrayList<>();
+	}
+
+
 
 	public User(String username, String password) {
 		this.username = username;
 		this.password = password;
-		this.friends = new ArrayList<String>();
 	}
 
 

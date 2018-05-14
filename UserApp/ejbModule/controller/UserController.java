@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -19,7 +20,9 @@ import javax.ws.rs.core.MediaType;
 
 import database.UserRepository;
 import model.ActiveUsers;
+import model.Host;
 import model.User;
+import service.ClusterService;
 
 @Path("/user")
 @Stateless
@@ -29,13 +32,18 @@ public class UserController {
 
 	@EJB
 	UserRepository repository;
+	@EJB
+	ClusterService clusterService;
 
 	@EJB
 	ActiveUsers activeUsers;
 
 	@SessionScoped
 	User activeUser;
-
+	
+	@Context
+	private HttpServletRequest request;
+	
 	@GET
 	@Path("/active")
 	public List<User> activeUsers() {
@@ -45,8 +53,17 @@ public class UserController {
 	@POST
 	@Path("/login")
 	public boolean login(User user) {
+		Host host = new Host(request.getRemoteAddr() + ":" + request.getServerPort(), "");
+		host.setAlias(clusterService.getHost(host));
+		user.setHost(host);
 		System.out.println(user);
 		List<User> users = repository.getUsers();
+		for (User temp : activeUsers()) {
+			if (temp.getUsername().equals(user.getUsername())) {
+				activeUser = user;
+				return false;
+			}
+		}
 		for (User u : users) {
 			if (u.getUsername().equals(user.getUsername()) && u.getPassword().equals(user.getPassword())) {
 				activeUsers.login(user);
@@ -58,11 +75,11 @@ public class UserController {
 		return false;
 	}
 
-	@POST
-	@Path("/logout")
-	public boolean logout(User user) {
+	@GET
+	@Path("/logout/{username}")
+	public boolean logout(@PathParam("username") String username) {
 		for (User temp : activeUsers.getActiveUsers()) {
-			if (temp.getUsername().equals(user.getUsername())) {
+			if (temp.getUsername().equals(username)) {
 				activeUsers.logout(temp);
 				activeUser = null;
 				return true;
@@ -89,6 +106,20 @@ public class UserController {
 	public int register(User user) {
 		repository.save(user);
 		return HttpServletResponse.SC_OK;
+	}
+	
+	@GET
+	@Path("/search/{criteria}")
+	public List<User> search(@PathParam("criteria")String criteria) {
+		List<User> users = getUsers();
+		List<User> ret = new ArrayList<>();
+		
+		for(User user: users) {
+			if(user.getUsername().contains(criteria) || user.getFirstName().contains(criteria)
+					|| user.getLastName().contains(criteria))
+				ret.add(user);
+		}
+		return ret;
 	}
 
 }

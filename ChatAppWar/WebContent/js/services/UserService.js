@@ -15,10 +15,10 @@ angular.module('chatApp').factory('UserService', ['$websocket', '$q', '$rootScop
             switch (command) {
                 case "login":
                     if (event.data.split(",")[1] === "true") {
-                        $rootScope.globals = {                
-                            currentUser: {                    
+                        $rootScope.globals = {                
+                            currentUser: {                    
                                 username: event.data.split(",")[2]
-                                       
+                                       
                             }
                         
                         }
@@ -28,6 +28,7 @@ angular.module('chatApp').factory('UserService', ['$websocket', '$q', '$rootScop
                             username: $rootScope.globals.currentUser.username
                         });
                     }
+                
             }
             var response;
 
@@ -35,6 +36,7 @@ angular.module('chatApp').factory('UserService', ['$websocket', '$q', '$rootScop
         });
         ws.onClose(function (event) {
             console.log('connection closed', event);
+            ws.send("Logout,"+$rootScope.globals.currentUser.username);
         });
 
 

@@ -4,10 +4,8 @@ import java.util.HashMap;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
-import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
 
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 
@@ -47,5 +45,15 @@ public class ClusterService {
 	public HashMap<String, Host> getHosts() {
 		System.out.println("GET HOSTS: " + hosts);
 		return hosts;
+	}
+	
+	public String getHost(Host host) {
+		System.out.println("Host: ======> " + host);
+		for(String key: hosts.keySet()) {
+			System.out.println("Key ====>" + key);
+			if(hosts.get(key).getAddress().equals(host.getAddress()))
+				return key;
+		}
+		return null;
 	}
 }

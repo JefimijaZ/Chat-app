@@ -31,7 +31,7 @@ public class ClusterController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String add() {
 		Host host = new Host(request.getRemoteAddr() + ":" + request.getServerPort(), "");
-		System.out.println("HOST ADD : " + host);
+		System.out.println("HOST ADD ===========================>: " + host);
 		clusterService.add(host);
 		return host.getAlias();
 	}
