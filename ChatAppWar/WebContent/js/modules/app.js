@@ -12,8 +12,6 @@ app.run(function ($rootScope, $trace, $transitions, UserService) {
         }                          
     };
     $transitions.onStart({ to: 'home-abstract.register' }, function(trans) {
-        console.log("Krenuo u register state.");
-        console.log("RootScope:"+$rootScope.globals.username);
         if ($rootScope.globals.currentUser.username) {
           // User isn't authenticated. Redirect to a new Target State
           //return trans.router.stateService.target('login');
@@ -26,11 +24,9 @@ app.run(function ($rootScope, $trace, $transitions, UserService) {
      });
     $transitions.onBefore({}, function(transition) {
         // check if the state should be protected
-        console.log("Usao u onBefore");
 
         if (($rootScope.globals.currentUser.username == null || $rootScope.globals.currentUser.username == undefined) && transition.to().name !== 'home-abstract.register') {
           // redirect to the 'login' state
-          console.log("User nije logovan pa prelazi na stranicu regiser");
           return transition.router.stateService.target('home-abstract.register');
         }
       });
@@ -42,7 +38,6 @@ app.constant('urls', {
 
 app.config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {
-        console.log("usao da namesti state");
         $stateProvider
             .state('home-abstract', {
                 abstract: true,
@@ -59,8 +54,8 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 views: {
                     'register': {
                         templateUrl: '/ChatAppWar/templates/register.html',
-                        /*  controller: 'RegisterController',
-                          controllerAs: 'registerCtrl'*/
+                          controller: 'RegisterController',
+                          controllerAs: 'registerCtrl'
                     }
                 }
             })
@@ -87,7 +82,9 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 abstract: true,
                 views: {
                     'friends': {
-                        templateUrl: '/ChatAppWar/templates/friends-abstract.html'
+                        templateUrl: '/ChatAppWar/templates/friends-abstract.html',
+                        controller: 'FriendsAbstractController',
+                        controllerAs: 'faCtrl'
                     }
                 }
             })
@@ -103,9 +100,15 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 url: '/friendsSearch',
                 views: {
                     'friends-search': {
-                        templateUrl: '/ChatAppWar/templates/friends-abstract-search.html'
+                        templateUrl: '/ChatAppWar/templates/friends-search.html',
+                        controller: 'FriendsSearchController',
+                        controllerAs: 'searchCtrl'
                     }
+                },
+                params: {
+                    searchValue: null
                 }
+                
             });
         $urlRouterProvider.otherwise('/register');
     }

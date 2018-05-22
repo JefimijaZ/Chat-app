@@ -12,6 +12,7 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 
@@ -64,12 +65,13 @@ public class WebSocketController {
 
 		case "Register":
 			if (!Configuration.masterAdress.equals(Configuration.localAdress)) {
+				System.out.println("User:"+message);
 				username = message.split(",")[1];
 				password = message.split(",")[2];
 				firstName = message.split(",")[3];
 				lastName = message.split(",")[4];
 				user = new User(username, firstName, lastName, password);
-				System.out.println("ussao");
+				System.out.println("usao u register");
 				resp = ((ResteasyWebTarget) ClientBuilder.newClient()
 						.target("http://" + "localhost:8080" + "/UserAppWar/rest/user/register")).request()
 								.post(Entity.json(user)).readEntity(Integer.class);
@@ -117,11 +119,11 @@ public class WebSocketController {
 			}
 		case "Search":
 			if (!Configuration.masterAdress.equals(Configuration.localAdress)) {
-				User ret = ((ResteasyWebTarget) ClientBuilder.newClient()
+				response =  ((ResteasyWebTarget) ClientBuilder.newClient()
 						.target("http://" + "localhost:8080" + "/UserAppWar/rest/user/search/" + message.split(",")[1]))
-								.request().get(User.class);
-				System.out.println("RESPONSE:" + ret);
-				return ret.toString();
+								.request().get(String.class);
+				System.out.println("RESPONSE:" + response);
+				return "searchResults/"+response;
 			} else {
 				userRequests.sendRequest(message+ "," + session.getId());
 			}

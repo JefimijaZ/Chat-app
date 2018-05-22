@@ -1,13 +1,13 @@
 <div class="container">
     <div class="row  justify-content-end align-self-center">
-        <div class="alert alert-success" role="alert" ng-if="settingsCtrl.successMessage">{{settingsCtrl.successMessage}}</div>
-        <div class="alert alert-danger" role="alert" ng-if="settingsCtrl.errorMessage">{{settingsCtrl.errorMessage}}</div>
+        <div class="alert alert-success" role="alert" ng-if="registerCtrl.successMessage">{{registerCtrl.successMessage}}</div>
+        <div class="alert alert-danger" role="alert" ng-if="registerCtrl.errorMessage">{{registerCtrl.errorMessage}}</div>
         <div class="col-md-6 col-md-offset-3">
             <h2>Sign Up</h2>
-            <form name="registerForm" ng-submit="settingsCtrl.submit()" role="form">
+            <form name="registerForm" ng-submit="registerCtrl.register()" role="form">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="firstName" placeholder="First name" ng-pattern="settingsCtrl.firstNamePattern"
-                        ng-model="settingsCtrl.userData.firstName" ng-minlength="2" ng-maxlength="20" ng-required="true"></input>
+                    <input type="text" class="form-control" name="firstName" placeholder="First name" ng-pattern="registerCtrl.firstNamePattern"
+                        ng-model="registerCtrl.userData.firstName" ng-minlength="2" ng-maxlength="20" ng-required="true"></input>
                     <div ng-show="registerForm.firstName.$touched && registerForm.firstName.$error.minlength">
                         <small style="color:red;display:block;text-align:center;">Name you have entered is too small!</small>
                     </div>
@@ -23,8 +23,8 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="text" class="form-control" name="lastName" placeholder="Last name" ng-pattern="settingsCtrl.lastNamePattern"
-                        ng-model="settingsCtrl.userData.lastName" ng-minlength="2" ng-maxlength="20" ng-required="true"></input>
+                    <input type="text" class="form-control" name="lastName" placeholder="Last name" ng-pattern="registerCtrl.lastNamePattern"
+                        ng-model="registerCtrl.userData.lastName" ng-minlength="2" ng-maxlength="20" ng-required="true"></input>
                     <div ng-show="registerForm.lastName.$touched && registerForm.lastName.$error.minlength">
                         <small style="color:red;display:block;text-align:center;">Last name you have entered is too small!</small>
                     </div>
@@ -40,8 +40,8 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="text" class="form-control" name="username" placeholder="Username" ng-pattern="settingsCtrl.usernamePattern"
-                        ng-model="settingsCtrl.userData.username" ng-minlength="3" ng-maxlength="10" ng-required="true"></input>
+                    <input type="text" class="form-control" name="username" placeholder="Username" ng-pattern="registerCtrl.usernamePattern"
+                        ng-model="registerCtrl.userData.username" ng-minlength="3" ng-maxlength="10" ng-required="true"></input>
                     <div ng-show="registerForm.username.$touched && (registerForm.username.$error.minlength || registerForm.username.$error.maxlength)">
                         <small style="color:red;display:block;text-align:center;">Username must have anywhere between 3 and 10 characters!</small>
                     </div>
@@ -53,21 +53,21 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <input type="password" name="Password" class="form-control" id="newPassword" ng-model="securityCtrl.newPassword" placeholder="Password">
+                    <input type="password" name="Password" class="form-control" id="newPassword" ng-model="registerCtrl.userData.password" placeholder="Password">
                     <small style="color:red;display:block;text-align:center;" ng-show="form.currentPassword.$dirty && form.currentPassword.$error.required"
                         class="help-block">Password is required</small>
                 </div>
                 <div class="form-group">
-                    <input type="password" name="newPassword" class="form-control" id="repeatPassword" ng-model="securityCtrl.repeatPassword"
+                    <input type="password" name="repeatPassword" class="form-control" id="repeatPassword" ng-model="registerCtrl.repeatPassword"
                         placeholder="Repeat password">
                     <small style="color:red;display:block;text-align:center;" ng-show="form.newPassword.$dirty && form.newPassword.$error.required"
                         class="help-block">Password is required</small>
-                    <small style="color:red;display:block;text-align:center;" ng-show="securityCtrl.passwordDoNotMatch" class="help-block">Passwords do not match</small>
-                    <small style="color:green;display:block;text-align:center;" ng-show="securityCtrl.passwordMatch" class="help-block">Passwords match</small>
+                    <small style="color:red;display:block;text-align:center;" ng-show="registerCtrl.passwordDoNotMatch" class="help-block">Passwords do not match</small>
+                    <small style="color:green;display:block;text-align:center;" ng-show="registerCtrl.passwordMatch" class="help-block">Passwords match</small>
                 </div>
                 <div class="form-actions justify-content-end">
-                    <button type="submit" ng-disabled="form.$invalid || settingsCtrl.dataLoading" class="btn btn-primary">Sign Up</button>
-                    <img ng-if="settingsCtrl.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                    <button type="submit" ng-disabled="form.$invalid || registerCtrl.dataLoading" class="btn btn-primary">Sign Up</button>
+                    <img ng-if="registerCtrl.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
                     />
                 </div>
             </form>
