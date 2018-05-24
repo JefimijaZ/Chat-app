@@ -40,7 +40,7 @@ public class UserRequest implements MessageListener {
 			System.out.println("USER REQUEST MESSAGE RECEIVED  " + text);
 			String type = text.split(",")[0];
 			String username, password, firstName, lastName, friendUsername, search;
-			boolean retF;
+			int retF;
 			User user;
 			Friends friend;
 			switch (type) {
@@ -74,7 +74,7 @@ public class UserRequest implements MessageListener {
 				friendUsername =  text.split(",")[1];
 				username =  text.split(",")[2];
 				friend = new Friends(username,friendUsername);
-				retF = friendController.removeFriend(friend);
+				retF = friendController.removeFriend(friendUsername, username);
 				userResponse.sendRequest("removeFriendResponse," + retF +  "," +text.split(",")[3] );
 				break;
 			case "getFriends":

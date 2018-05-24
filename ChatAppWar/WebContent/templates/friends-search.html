@@ -10,13 +10,13 @@
       <li href="#" class="list-group-item title">
         Search results:
       </li>
-      <li href="#" class="list-group-item text-left"  ng-repeat="friend in searchCtrl.searchResults">
+      <li href="#" class="list-group-item text-left" ng-show="friend.username !== globals.currentUser.username"  ng-repeat="friend in searchCtrl.searchResults">
         <i class="fas fa-user"></i>
         <label class="name">
             {{friend.firstName}} {{friend.lastName}} ({{friend.username}})<br>
         </label>
         <label class="pull-right">
-            <button  class="btn btn-success btn-xs" ng-click="searchCtrl.addFriend(globals.currentUser.username,friend.id)" title="View"><i class="fas fa-user-plus"></i></button>
+            <button  class="btn btn-success btn-xs" ng-show="searchCtrl.showAdd(friend.username)==1" ng-click="searchCtrl.addFriend(globals.currentUser.username,friend.username)" title="View"><i class="fas fa-user-plus"></i></button>
             <!-- <button ng-show="searchCtrl.showAdd(friend.id)==1" class="btn btn-default btn-xs"  title="View">Requested</button>
             <button ng-show="searchCtrl.showAdd(friend.id)==2" class="btn btn-success btn-xs" ng-click="searchCtrl.accept(globals.currentUser.username,friend.id)" title="View"><i class="fas fa-check"></i></button>
             <button ng-show="searchCtrl.showAdd(friend.id)==2" class="btn btn-danger btn-xs" ng-click="searchCtrl.refuse(globals.currentUser.username,friend.id)" title="View"><i class="fas fa-window-close"></i></button> -->

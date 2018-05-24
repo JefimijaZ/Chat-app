@@ -92,7 +92,9 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 url: '/friendsList',
                 views: {
                     'friends-list': {
-                        templateUrl: '/ChatAppWar/templates/friends-list.html'
+                        templateUrl: '/ChatAppWar/templates/friends-list.html',
+                        controller: 'FriendsListController',
+                        controllerAs: 'friendsCtrl'
                     }
                 }
             })
@@ -109,7 +111,34 @@ app.config(['$stateProvider', '$urlRouterProvider',
                     searchValue: null
                 }
                 
-            });
+            })
+            .state('home-abstract.inbox-abstract', {
+                url:'/inbox',
+                abstract: true,
+                views:{
+                    'inbox-abstract':{
+                        templateUrl: '/ChatAppWar/templates/inbox-abstract.html',
+                        controller: 'InboxController',
+                        controllerAs: 'inboxCtrl'
+                    }
+                },
+                params: {
+                    username: null
+                }
+            })
+            .state('home-abstract.inbox-abstract.chat', {
+                url:'/inbox',
+                views:{
+                    'chat':{
+                        templateUrl: '/ChatAppWar/templates/chat.html',
+                        controller: 'ChatController',
+                        controllerAs: 'chatCtrl'
+                    }
+                },
+                params: {
+                    friendUsername: null
+                }
+            })
         $urlRouterProvider.otherwise('/register');
     }
 ]);

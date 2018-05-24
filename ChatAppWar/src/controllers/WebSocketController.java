@@ -43,6 +43,7 @@ public class WebSocketController {
 		switch (request) {
 		case "Login":
 			if (!Configuration.masterAdress.equals(Configuration.localAdress)) {
+				System.out.println("Usao je u if kao da je na slave cvoru");
 				username = message.split(",")[1];
 				password = message.split(",")[2];
 				user = new User(username, password);
@@ -53,7 +54,7 @@ public class WebSocketController {
 				return "login," + response + "," + username;
 
 			} else {
-				System.out.println("START LOGIN MESSAge:  " + message);
+				System.out.println("START LOGIN MESSAGE:  " + message);
 				System.out.println("STARTING LOGIN");
 				userRequests.sendRequest(message + "," + session.getId());
 				System.out.println("JMS response :  ");
@@ -88,8 +89,8 @@ public class WebSocketController {
 				Friends friend = new Friends(friendUsername, username);
 				resp = ((ResteasyWebTarget) ClientBuilder.newClient()
 						.target("http://" + "localhost:8080" + "/UserAppWar/rest/friend/add")).request()
-								.put(Entity.json(friend)).readEntity(Integer.class);
-				System.out.println("add ffriend respo: " + resp);
+								.post(Entity.json(friend)).readEntity(Integer.class);
+				System.out.println("add friend respo: " + resp);
 				return resp + "";
 			} else {
 				userRequests.sendRequest(message+ "," + session.getId());
@@ -100,9 +101,9 @@ public class WebSocketController {
 				username = message.split(",")[2];
 				Friends f = new Friends(friendUsername, username);
 				resp = ((ResteasyWebTarget) ClientBuilder.newClient()
-						.target("http://" + "localhost:8080" + "/UserAppWar/rest/friend/remove")).request()
-								.put(Entity.json(f)).readEntity(Integer.class);
-				System.out.println("add ffriend respo: " + resp);
+						.target("http://" + "localhost:8080" + "/UserAppWar/rest/friend/remove/"+friendUsername+"/"+username)).request()
+								.delete().readEntity(Integer.class);
+				System.out.println("delete friend respo: " + resp);
 			} else {
 				userRequests.sendRequest(message+ "," + session.getId());
 			}
@@ -142,7 +143,23 @@ public class WebSocketController {
 			} else {
 				userRequests.sendRequest(message + "," + session.getId());
 			}
+		
+		case "getUserFriends":
+			if (!Configuration.masterAdress.equals(Configuration.localAdress)) {
+//				System.out.println("Usao u logout i gadjam" + " http://" + "localhost:8080"
+//						+ "/UserAppWar/rest/user/logout" + message.split(",")[1]);
+				username = message.split(",")[1];
+				response = ((ResteasyWebTarget) ClientBuilder.newClient()
+						.target("http://" + "localhost:8080" + "/UserAppWar/rest/friend/all/" + username)).request()
+								.get(String.class);
+				System.out.println("RESPONSE:" + response);
+				userService.logout(username);
+				return "friends/"+response;
+			} else {
+				userRequests.sendRequest(message + "," + session.getId());
+			}
 		}
+			
 		return "heej";
 	}
 

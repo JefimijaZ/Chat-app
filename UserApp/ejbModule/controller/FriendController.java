@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -27,24 +29,25 @@ public class FriendController {
 	
 
 	@GET
-	@Path("/all")
-	public List<User> getFriends(String username) {
+	@Path("/all/{username}")
+	public List<User> getFriends(@PathParam("username") String username) {
 		return friendRepository.getUserFriends(username);
 	}
 	
-	@PUT
+	@POST
 	@Path("/add")
-	public boolean addFriend(Friends friend) {
+	public int addFriend(Friends friend) {
 		friendRepository.addFriend(friend.getUserOne(), friend.getUserTwo());
 		
-		return true;
+		return HttpServletResponse.SC_OK;
 	}
 	
 	@DELETE
-	@Path("/remove")
-	public boolean removeFriend(Friends friend) {
-		friendRepository.addFriend(friend.getUserOne(), friend.getUserTwo());
-		return true;
+	@Path("/remove/{friendUsername}/{username}")
+	public int removeFriend(@PathParam("friendUsername") String friendsUsername, @PathParam("username") String username) {
+		friendRepository.removeFriend(friendsUsername, username);
+		friendRepository.removeFriend(username, friendsUsername);
+		return HttpServletResponse.SC_OK;
 	}
 	
 	

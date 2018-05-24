@@ -53,9 +53,9 @@ public class UserController {
 	@POST
 	@Path("/login")
 	public boolean login(User user) {
-		Host host = new Host(request.getRemoteAddr() + ":" + request.getServerPort(), "");
-		host.setAlias(clusterService.getHost(host));
-		user.setHost(host);
+	//	Host host = new Host(request.getRemoteAddr() + ":" + request.getServerPort(), "");
+	//	host.setAlias(clusterService.getHost(host));
+	//	user.setHost(host);
 		System.out.println(user);
 		List<User> users = repository.getUsers();
 		for (User temp : activeUsers()) {
@@ -101,7 +101,7 @@ public class UserController {
 		return repository.getUser(username);
 	}
 
-	@PUT
+	@POST
 	@Path("/register")
 	public int register(User user) {
 		repository.save(user);

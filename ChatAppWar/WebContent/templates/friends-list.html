@@ -13,13 +13,13 @@
         Your friends list
       </li>
       <li href="#" class="list-group-item text-left" ng-repeat="friend in friendsCtrl.friendsList">
-        <img class="img-thumbnail" ng-src="images/user-pic" width='100' height='100'>
+        <i class="fas fa-user"></i>
         <label class="name">
           {{friend.firstName}} {{friend.lastName}} ({{friend.username}})
           <br>
         </label>
         <label class="pull-right">
-          <button class="btn btn-danger  btn-xs" ng-click="friendsCtrl.deleteFriend(globals.currentUser.username,friend.id)" title="Delete">
+          <button class="btn btn-danger  btn-xs" ng-click="friendsCtrl.deleteFriend(globals.currentUser.username,friend.username)" title="Delete">
             <i class="fas fa-trash-alt"></i>
           </button>
         </label>

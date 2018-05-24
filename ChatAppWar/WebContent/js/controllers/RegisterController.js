@@ -7,6 +7,7 @@ angular.module('chatApp').controller('RegisterController',['$state','$websocket'
     self.lastNamePattern=/^[A-Z][a-z]*\S$/;
     self.userNamePattern= /^\S*$/;
     self.passwordPattern = /^\S*$/;
+    self.successMsg="";
     self.userData={};
     self.dataLoading = false;
     self.register = register;
@@ -27,6 +28,8 @@ angular.module('chatApp').controller('RegisterController',['$state','$websocket'
     ws.onMessage(function (event) {
         console.log('message from overview: ', event.data);
         self.dataLoading = false;
+        $state.reload();
+        self.successMsg = "Succesfully registered. Login now.";
         
     });
     ws.onClose(function (event) {

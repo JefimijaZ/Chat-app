@@ -7,11 +7,14 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
         crossorigin="anonymous">
+    
+        <link href="./app.css" rel="stylesheet"/>
 </head>
 
 <body ng-controller="HomeController as hc" onunload="hc.logout()">
     <div ui-view></div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.6.8-fix/jquery.nicescroll.min.js"></script>
     <!--<script src="js/lib/angular.min.js" ></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="//unpkg.com/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
@@ -27,6 +30,8 @@
     <script src="js/controllers/FriendsListController.js"></script>
     <script src="js/controllers/FriendsSearchController.js"></script>
     <script src="js/controllers/RegisterController.js"></script>
+    <script src="js/controllers/InboxController.js"></script>
+    <script src="js/controllers/ChatController.js"></script>
 
 
 </body>

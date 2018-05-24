@@ -1,4 +1,4 @@
-angular.module('chatApp').controller('FriendsSearchController', ['$scope', '$websocket', '$rootScope', '$state', '$stateParams',
+angular.module('chatApp').controller('InboxController', ['$scope', '$websocket', '$rootScope', '$state', '$stateParams',
     function ($scope, $websocket, $rootScope, $state, $stateParams) {
         console.log($stateParams.searchValue + "ovo su state params");
         var self = this;
