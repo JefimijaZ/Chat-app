@@ -1,6 +1,8 @@
 package model;
 
-public class Friends {
+import java.io.Serializable;
+
+public class Friends implements Serializable {
 	
 	private String userOne;
 	private String userTwo;

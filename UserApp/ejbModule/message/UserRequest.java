@@ -1,5 +1,6 @@
 package message;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.ActivationConfigProperty;
@@ -9,8 +10,6 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Context;
 
 import controller.FriendController;
 import controller.UserController;
@@ -33,6 +32,7 @@ public class UserRequest implements MessageListener {
 	@Override
 	public void onMessage(Message message) {
 		TextMessage tm = (TextMessage) message;
+		
 		String text;
 		
 		try {
@@ -79,9 +79,10 @@ public class UserRequest implements MessageListener {
 				break;
 			case "getFriends":
 				username =  text.split(",")[1];
-				List<User> users = friendController.getFriends(username);
+				ArrayList<User> users = (ArrayList<User>) friendController.getFriends(username);
 				//TODO: Poslati listu usera
-				userResponse.sendRequest("getFriendsResponse," + users + "," +text.split(",")[3]  );
+//				userResponse.sendResponseList(users, text.split(",")[3]);
+//				userResponse.sendRequest("getFriendsResponse," + users + "," +text.split(",")[3]  );
 				break;
 			case "User":
 				username =  text.split(",")[1];
@@ -96,7 +97,10 @@ public class UserRequest implements MessageListener {
 			case "Search":
 				search =  text.split(",")[1];
 				List<User> searchUsers = userController.search(search);
-				userResponse.sendRequest("SearchResponse," +searchUsers +  "," +text.split(",")[2] );
+				System.out.println("split text criteria is-----------> " + text.split(",")[2] + " <------------------- ");
+				System.out.println("search criteria result is-----------> " + searchUsers + " <------------------- and size " + searchUsers.size());
+				userResponse.sendResponseList(searchUsers, text.split(",")[2]);
+//				userResponse.sendRequest("SearchResponse," + searchUsers + "," +text.split(",")[2] );
 				break;
 			default:
 				return;

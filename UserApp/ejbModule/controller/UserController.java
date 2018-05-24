@@ -40,10 +40,8 @@ public class UserController {
 
 	@SessionScoped
 	User activeUser;
-	
-	@Context
-	private HttpServletRequest request;
-	
+
+
 	@GET
 	@Path("/active")
 	public List<User> activeUsers() {
@@ -53,9 +51,10 @@ public class UserController {
 	@POST
 	@Path("/login")
 	public boolean login(User user) {
-	//	Host host = new Host(request.getRemoteAddr() + ":" + request.getServerPort(), "");
-	//	host.setAlias(clusterService.getHost(host));
-	//	user.setHost(host);
+//		Host host = new Host(request.getRemoteAddr() + ":" + request.getServerPort(), "");
+//		host.setAlias(clusterService.getHost(host));
+//		user.setHost(host);
+
 		System.out.println(user);
 		List<User> users = repository.getUsers();
 		for (User temp : activeUsers()) {
@@ -107,13 +106,13 @@ public class UserController {
 		repository.save(user);
 		return HttpServletResponse.SC_OK;
 	}
-	
+
 	@GET
 	@Path("/search/{criteria}")
 	public List<User> search(@PathParam("criteria")String criteria) {
 		List<User> users = getUsers();
 		List<User> ret = new ArrayList<>();
-		
+
 		for(User user: users) {
 			if(user.getUsername().contains(criteria) || user.getFirstName().contains(criteria)
 					|| user.getLastName().contains(criteria))
