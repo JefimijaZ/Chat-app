@@ -122,7 +122,7 @@ public class WebSocketController {
 				response =  ((ResteasyWebTarget) ClientBuilder.newClient()
 						.target("http://" + "localhost:8080" + "/UserAppWar/rest/user/search/" + message.split(",")[1]))
 								.request().get(String.class);
-				System.out.println("RESPONSE:" + response);
+				System.out.println("RESPONSE:" + response);				
 				return "searchResults/"+response;
 			} else {
 				userRequests.sendRequest(message+ "," + session.getId());
@@ -168,4 +168,14 @@ public class WebSocketController {
 		}
 		return null;
 	}
+
+	public List<Session> getSessions() {
+		return sessions;
+	}
+
+	public void setSessions(List<Session> sessions) {
+		this.sessions = sessions;
+	}
+	
+	
 }

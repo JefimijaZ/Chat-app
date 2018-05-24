@@ -1,6 +1,8 @@
 package model;
 
-public class Host {
+import java.io.Serializable;
+
+public class Host implements Serializable{
 
 	private String address;
 	private String alias;

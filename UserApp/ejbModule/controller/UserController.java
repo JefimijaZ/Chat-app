@@ -41,8 +41,6 @@ public class UserController {
 	@SessionScoped
 	User activeUser;
 	
-	@Context
-	private HttpServletRequest request;
 	
 	@GET
 	@Path("/active")
@@ -53,9 +51,9 @@ public class UserController {
 	@POST
 	@Path("/login")
 	public boolean login(User user) {
-		Host host = new Host(request.getRemoteAddr() + ":" + request.getServerPort(), "");
-		host.setAlias(clusterService.getHost(host));
-		user.setHost(host);
+//		Host host = new Host(request.getRemoteAddr() + ":" + request.getServerPort(), "");
+//		host.setAlias(clusterService.getHost(host));
+//		user.setHost(host);
 		System.out.println(user);
 		List<User> users = repository.getUsers();
 		for (User temp : activeUsers()) {

@@ -1,15 +1,16 @@
 package model;
 
-public class Host {
+import java.io.Serializable;
+
+public class Host implements Serializable {
 
 	private String address;
 	private String alias;
-	
-	
+
 	public Host() {
-		
+
 	}
-	
+
 	public Host(String address, String alias) {
 		this.address = address;
 		this.alias = alias;
@@ -35,6 +36,5 @@ public class Host {
 	public String toString() {
 		return "Host [address=" + address + ", alias=" + alias + "]";
 	}
-	
-	
+
 }

@@ -17,9 +17,6 @@ public class UserRequestsJMS {
 	
 	public void sendRequest(String message) {
 		try {
-			System.out.println("LOGIN SEND REQUEST");
-			System.out.println(message);
-			System.out.println("LOGIN SEND REQUEST");
 			Context context = new InitialContext();
 			ConnectionFactory cf = (ConnectionFactory) context.lookup("jms/RemoteConnectionFactory");
 			final Queue queue = (Queue) context.lookup("jms/queue/mojQueue");
