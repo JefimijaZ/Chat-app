@@ -1,0 +1,35 @@
+<div ><nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Chat App</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto" >
+            <li class="nav-item active" ng-show="globals.currentUser.username!=null || globals.currentUser.username!=undefined">
+                <a class="nav-link" ui-sref="home-abstract.inbox-abstract.chat({username:globals.currentUser.username, friendUsername:'stefan95'})">Inbox
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item" ng-show="globals.currentUser.username!=null || globals.currentUser.username!=undefined">
+                <a class="nav-link" ui-sref="home-abstract.profile-abstract.profile-overview({username:globals.currentUser.username})">Profile</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" ng-if="globals.currentUser.username==undefined">
+            <input class="form-control mr-sm-2" type="text" placeholder="User name" ng-model="homeCtrl.credentials.username" aria-label="User name">
+            <input class="form-control mr-sm-2" type="password" placeholder="Password" ng-model="homeCtrl.credentials.password" aria-label="Password">
+            <button class="btn btn-outline-success my-2 my-sm-0" ng-click="homeCtrl.login()" type="submit">Login</button>
+        </form>
+        <ul class="navbar-nav ml-auto" ng-if="globals.currentUser.username!=undefined">
+            <li class="nav-item">
+              <a  class="nav-link" ng-click="homeCtrl.logout()"><i class="fas fa-sign-in-alt"></i> Log out</a>
+            </li>
+           
+          </ul>
+    </div>
+</nav>
+<div ui-view="register"></div>
+<div ui-view="profile-abstract"></div>
+<div ui-view="inbox-abstract"></div>
+</div>

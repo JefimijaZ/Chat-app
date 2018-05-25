@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="chatApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
+    
+        <link href="./app.css" rel="stylesheet"/>
+</head>
+
+<body ng-controller="HomeController as hc" onunload="hc.logout()">
+    <div ui-view></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.6.8-fix/jquery.nicescroll.min.js"></script>
+    <!--<script src="js/lib/angular.min.js" ></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="//unpkg.com/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-websocket/2.0.1/angular-websocket.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        crossorigin="anonymous"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
+    <script src="js/modules/app.js"></script>
+    <script src="js/services/UserService.js"></script>
+    <script src="js/controllers/HomeController.js"></script>
+    <script src="js/controllers/OverviewController.js"></script>
+    <script src="js/controllers/FriendsAbstractController.js"></script>
+    <script src="js/controllers/FriendsListController.js"></script>
+    <script src="js/controllers/FriendsSearchController.js"></script>
+    <script src="js/controllers/RegisterController.js"></script>
+    <script src="js/controllers/InboxController.js"></script>
+    <script src="js/controllers/ChatController.js"></script>
+
+
+</body>
+
+</html>

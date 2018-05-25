@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="row">
+        <div class="col-3 float-left " role="navigation">
+            <nav class="nav flex-column">
+                <a class="nav-link active" ui-sref="home-abstract.profile-abstract.profile-overview({username:globals.currentUser.username})">
+                    <i class="fas fa-list-ul"></i> Overview
+                </a>
+                <a class="nav-link" ui-sref="home-abstract.profile-abstract.friends-abstract.friends-list({username:globals.currentUser.username})">
+                    <i class="fas fa-users"></i> Friends
+                </a>
+                <a class="nav-link" ui-sref="home-abstract.profile-abstract.groups-abstract.groups-list({username:globals.currentUser.username})">
+                    <i class="fas fa-users"></i> Groups
+                </a>
+            </nav>
+        </div>
+        <div class="col-9 float-left">
+            <div ui-view='overview'></div>
+            <div ui-view='friends'></div>
+            <div ui-view='groups'></div>
+        </div>
+    </div>
+</div>
