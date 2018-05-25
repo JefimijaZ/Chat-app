@@ -1,0 +1,34 @@
+<div class="col-inside-lg decor-default">
+    <div class="chat-body">
+        <h6>Mini Chat</h6>
+        <div ng-repeat="message in chatCtrl.messages">
+            <div class="answer left" ng-show="message.user.username!==globals.currentUser.username">
+                <div class="avatar">
+                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="User name">
+                    <div class="status offline"></div>
+                </div>
+                <div class="name">{{message.user.username}}</div>
+                <div class="text">
+                    {{message.content}}
+                </div>
+                <div class="time">5 min ago</div>
+            </div>
+            <div class="answer right" ng-show="message.user.username===globals.currentUser.username">
+                <div class="avatar">
+                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="User name">
+                    <div class="status offline"></div>
+                </div>
+                <div class="name">{{message.user.username}}</div>
+                <div class="text">
+                    {{message.content}}
+                </div>
+                <div class="time">5 min ago</div>
+            </div>
+        </div>
+        <div class="answer-add">
+            <input placeholder="Write a message">
+            <span class="answer-btn answer-btn-1"></span>
+            <span class="answer-btn answer-btn-2"></span>
+        </div>
+    </div>
+</div>
