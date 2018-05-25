@@ -1,4 +1,4 @@
-angular.module('chatApp').controller('RegisterController',['$state','$websocket',function($state, $websocket){
+angular.module('chatApp').controller('RegisterController',['$rootScope', '$state','$websocket',function($rootScope, $state, $websocket){
     var self = this;
     var ws = $websocket("ws://" + document.location.host + "/ChatAppWar/usersEndPoint");
     self.send = send;

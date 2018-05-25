@@ -129,7 +129,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
             .state('home-abstract.inbox-abstract.chat', {
                 url:'/inbox',
                 views:{
-                    'chat':{
+                    'chatView':{
                         templateUrl: '/ChatAppWar/templates/chat.html',
                         controller: 'ChatController',
                         controllerAs: 'chatCtrl'

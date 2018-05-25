@@ -4,64 +4,50 @@ import java.util.Date;
 
 public class Message {
 	
-	private int id;
-	private User sender;
-	private User receiver;
-	private Date date;
-	private String content;
+	private String username;
+	private String friendsUsername;
+	private String usersMessage;
 	
 	
 	public Message() {
 	}
 
 
-	public int getId() {
-		return id;
+	public String getUsername() {
+		return username;
 	}
 
 
-	public void setId(int id) {
-		this.id = id;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 
-	public User getSender() {
-		return sender;
+	public String getFriendsUsername() {
+		return friendsUsername;
 	}
 
 
-	public void setSender(User sender) {
-		this.sender = sender;
+	public void setFriendsUsername(String friendsUsername) {
+		this.friendsUsername = friendsUsername;
 	}
 
 
-	public User getReceiver() {
-		return receiver;
+	public String getUsersMessage() {
+		return usersMessage;
 	}
 
 
-	public void setReceiver(User receiver) {
-		this.receiver = receiver;
+	public void setUsersMessage(String usersMessage) {
+		this.usersMessage = usersMessage;
 	}
 
 
-	public Date getDate() {
-		return date;
+	public Message(String username, String friendsUsername, String usersMessage) {
+		super();
+		this.username = username;
+		this.friendsUsername = friendsUsername;
+		this.usersMessage = usersMessage;
 	}
 
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-
-	public String getContent() {
-		return content;
-	}
-
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-	
 }
