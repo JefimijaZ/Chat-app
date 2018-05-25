@@ -48,7 +48,7 @@ public class UserResponseJMS {
 		}
 		
 	}
-	public void sendResponseObject(User message, String sessionId) {
+	public void sendResponseObject(User message, String sessionId, int type) {
 		try {
 			System.out.println("Responding with object: " + message);
 			Context context = new InitialContext();
@@ -60,7 +60,8 @@ public class UserResponseJMS {
 			connection.start();
 			QueueSender sender = session.createSender(queue);
 			ObjectMessage msg = session.createObjectMessage();
-			
+			msg.setIntProperty("type", type);
+			msg.setStringProperty("sessionId", sessionId);
 			msg.setObject(message);			
 			sender.send(msg);		
 			Thread.sleep(1000);
@@ -75,7 +76,7 @@ public class UserResponseJMS {
 			ex.printStackTrace();
 		}
 	}
-	public void sendResponseList(List<User> users, String sessionId) {
+	public void sendResponseList(List<User> users, String sessionId, int type) {
 		try {
 			System.out.println("Responding with list: " + users);
 			Context context = new InitialContext();
@@ -87,7 +88,7 @@ public class UserResponseJMS {
 			connection.start();
 			QueueSender sender = session.createSender(queue);
 			ObjectMessage msg = session.createObjectMessage();
-			
+			msg.setIntProperty("type", type);
 			msg.setStringProperty("sessionId", sessionId);
 			msg.setObject((Serializable)users);
 			sender.send(msg);		

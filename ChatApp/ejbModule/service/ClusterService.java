@@ -19,7 +19,7 @@ public class ClusterService {
 	}
 	
 	public void add(Host host) {
-		System.out.println("registered");
+		System.out.println("registered host in cluster service is......................" + host);
 		clusters.put(host.getAlias(), host);
 	}
 
@@ -30,4 +30,11 @@ public class ClusterService {
 	public HashMap<String, Host> getHosts() {		
 		return clusters;
 	}
+
+	
+	public void setHosts(HashMap<String, Host> clusters) {
+		this.clusters = clusters;
+	}
+	
+	
 }

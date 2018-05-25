@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -27,10 +26,12 @@ public class ClusterController {
 	@Context
 	private HttpServletRequest request;
 
-	@POST
+	@GET
+	@Path("/{port}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String add() {
-		Host host = new Host(request.getRemoteAddr() + ":" + request.getServerPort(), "");
+	public String add(@PathParam("port") String port) {
+//		Host host = new Host(request.getRemoteAddr() + ":" + request.getServerPort(), "");
+		Host host = new Host(request.getRemoteAddr() + ":" +port, "");
 		System.out.println("HOST ADD ===========================>: " + host);
 		clusterService.add(host);
 		return host.getAlias();

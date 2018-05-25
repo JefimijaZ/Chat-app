@@ -38,7 +38,6 @@ public class UserResponse implements MessageListener {
 	@EJB
 	WebSocketController socket;
 
-	
 	@Override
 	public void onMessage(Message message) {
 		if (message instanceof TextMessage) {
@@ -54,18 +53,16 @@ public class UserResponse implements MessageListener {
 				switch (type) {
 				case "LoginResponse":
 					username = text.split(",")[2];
-					User user = ((ResteasyWebTarget) ClientBuilder.newClient()
-							.target("http://" + "localhost:8080" + "/UserAppWar/rest/user/" + username)).request()
-									.get(User.class);
+//					User user = ((ResteasyWebTarget) ClientBuilder.newClient()
+//							.target("http://" + "localhost:8080" + "/UserAppWar/rest/user/" + username)).request()
+//									.get(User.class);
 					response = text.split(",")[1];
-					userService.login(user);
 					session = socket.getSession(text.split(",")[3]);
 					session.getBasicRemote().sendText("login," + response + "," + username);
 					break;
 				case "LogoutResponse":
 					username = text.split(",")[2];
 					response = text.split(",")[1];
-					userService.logout(username);
 					session = socket.getSession(text.split(",")[3]);
 					session.getBasicRemote().sendText("logout," + response);
 					break;
@@ -74,23 +71,29 @@ public class UserResponse implements MessageListener {
 					session = socket.getSession(text.split(",")[2]);
 					session.getBasicRemote().sendText(response);
 					break;
-				case "UserResponse":
-					response = text.split(",")[1];
-					session = socket.getSession(text.split(",")[2]);
-					session.getBasicRemote().sendText(response);
-					break;
+				
 				case "addFriendResponse":
 					response = text.split(",")[1];
 					session = socket.getSession(text.split(",")[2]);
-					session.getBasicRemote().sendText(response);
+					session.getBasicRemote().sendText(response + "");
 					break;
 				case "removeFriendResponse":
 					response = text.split(",")[1];
 					session = socket.getSession(text.split(",")[2]);
-					session.getBasicRemote().sendText(response);
+					session.getBasicRemote().sendText(response + "");
 					break;
 				case "SearchResponse":
 					session = socket.getSession(text.split(",")[1]);
+					break;
+				case "LoginNotify":
+					System.out.println("Login notify case about to call all");
+					username = text.split(",")[1];
+					userService.login(username);
+					break;
+				case "LogoutNotify":
+					System.out.println("Logout notify case about to call all");
+					username = text.split(",")[1];
+					userService.logout(username);
 					break;
 
 				default:
@@ -108,17 +111,28 @@ public class UserResponse implements MessageListener {
 		} else if (message instanceof ObjectMessage) {
 			ObjectMessage tm = (ObjectMessage) message;
 			Session session;
+			
+			// 1 - getUser,2 - searchResult, 3 - getFriends
+
 			try {
-//				Object object = ((ObjectMessage) message).getObject();
-//				ArrayList<User> users = (ArrayList<User>) object;
-//				@SuppressWarnings("unchecked")
-//				ArrayList<User> users = (ArrayList<User>) tm.getBody(new GenericType<List<User>>(){});
-				
-				List<User> listData = null;
-				listData = (ArrayList) tm.getObject();
+				int type = tm.getIntProperty("type");
 				session = socket.getSession(tm.getStringProperty("sessionId"));
-				String gson = new Gson().toJson(listData);
-				session.getBasicRemote().sendText("searchResults/" +gson);
+				if(type == 1) {
+					User user = (User) tm.getObject();					
+					String gson = new Gson().toJson(user);
+					session.getBasicRemote().sendText(gson);
+				}else if (type == 2) {
+					List<User> listData = null;
+					listData = (ArrayList) tm.getObject();					
+					String gson = new Gson().toJson(listData);
+					session.getBasicRemote().sendText("searchResults/" + gson);
+				} else if (type==3) {
+					List<User> listData = null;
+					listData = (ArrayList) tm.getObject();					
+					String gson = new Gson().toJson(listData);
+					System.out.println("GSON friends ALL " + gson);
+					session.getBasicRemote().sendText("friends/" + gson);
+				}
 			} catch (JMSException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -1,17 +1,17 @@
 angular.module('chatApp').controller('InboxController', ['$scope', '$websocket', '$rootScope', '$state', '$stateParams',
     function ($scope, $websocket, $rootScope, $state, $stateParams) {
+        console.log($stateParams.searchValue + "ovo su state params");
         var self = this;
-        self.recipient = "";
-        self.message = "";
-
-        self.conversationList = {};
-        self.conversations = [];
+        this.searchValue = $stateParams.searchValue;
+        self.searchResults = {};
+        self.friendsList = {};
         self.send = send;
-        self.newConversation = newConversation;
-        // self.conversationList = conversationList;
-        var ws = $websocket("ws://" + document.location.host + "/ChatAppWar/usersEndPoint");
-        ws.send("getConversations," + $rootScope.globals.currentUser.username);
+        self.showAdd = showAdd;
+        self.addFriend = addFriend;
 
+        var ws = $websocket("ws://" + document.location.host + "/ChatAppWar/usersEndPoint");
+        self.send("Search," + this.searchValue);
+        self.send("getUserFriends," + $rootScope.globals.currentUser.username);
         function send(message) {
             if (angular.isString(message)) {
                 ws.send(message);
@@ -20,33 +20,11 @@ angular.module('chatApp').controller('InboxController', ['$scope', '$websocket',
             }
         }
         ws.onMessage(function (event) {
-            console.log('message from inbox-abstract: ', event);
+            console.log('message from search: ', event);
             var command = event.data.split("/")[0];
-            if (command === "conversations") {
-                self.conversations = [];
-                self.conversationList = JSON.parse(event.data.split("/")[1]);
-                Loop1:
-                for (var i = 0; i < self.conversationList.length; i++) {
-                    if (self.conversationList[i].user.username === $rootScope.globals.currentUser.username) {
-                        for (var j = 0; j < self.conversations.length; j++) {
-                            Loop2:
-                            if (self.conversationList[i].friend.username === self.conversations[j].username) {
-                                break Loop1;
-                            }
-
-                        }
-                        self.conversations.push(self.conversationList[i].friend);
-                    } else if (self.conversationList[i].friend.username === $rootScope.globals.currentUser.username) {
-                        for (var j = 0; j < self.conversations.length; j++) {
-                            if (self.conversationList[i].user.username === self.conversations[j].username) {
-                                break Loop1;
-                            }
-
-                        }
-                        self.conversations.push(self.conversationList[i].user);
-                    }
-                }
-            } else if (command === "friends") {
+            if (command === "searchResults") {
+                self.searchResults = JSON.parse(event.data.split("/")[1]);
+            }else if(command === "friends"){
                 self.friendsList = JSON.parse(event.data.split("/")[1]);
                 console.log(self.friendsList);
 
@@ -56,12 +34,20 @@ angular.module('chatApp').controller('InboxController', ['$scope', '$websocket',
             console.log('connection closed', event);
             ws.send("Logout," + $rootScope.globals.currentUser.username);
         });
-
-        function newConversation() {
-            console.log("Inbox controller: " + "newConversation," + $rootScope.globals.currentUser.username + "," + self.recipient + "," + self.message);
-            self.send("newConversation," + $rootScope.globals.currentUser.username + "," + self.recipient + "," + self.message);
+        function showAdd(friendsUsername){
+            for(var i =0; i<self.friendsList.length; i++){
+                if(self.friendsList[i].username === friendsUsername){
+                    return 0;
+                }
+            }
+            
+            return 1;
         }
-
+        function addFriend(username, friendsUsername){
+            console.log("addFriend," + friendsUsername + "," + username);
+            self.send("addFriend," + friendsUsername + "," + username);
+            //$state.go("home-abstract.profile-abstract.friends-abstract.friends-search",{username: $rootScope.globals.currentUser.username,searchValue: self.searchValue});
+            $state.reload();
+        }
     }
 ]);
-

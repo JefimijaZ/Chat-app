@@ -43,7 +43,4 @@ public class DatabaseConnection {
 	public MongoCollection<Document> getFriends() {
 		return mongoClient.getDatabase("agentidb").getCollection("Friends");
 	}
-	public MongoCollection<Document> getMessages() {
-		return mongoClient.getDatabase("agentidb").getCollection("Messages");
-	}
 }

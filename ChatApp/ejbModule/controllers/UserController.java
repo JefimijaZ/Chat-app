@@ -6,7 +6,6 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -24,20 +23,26 @@ public class UserController {
 	@EJB
 	ClusterInit clusterInit;
 	
-	
-	@POST
-	@Path("/login")
-	public void login(User user) {
+	@GET
+	@Path("/login/{username}")
+	public void login(@PathParam("username")String username) {
 		boolean exists = false;
+		User user = null;
 		List<User> activeUsers = clusterInit.getActiveUsers();
+		
 		for(User u: activeUsers) {
-			if(u.getUsername().equals(user.getUsername())) {
+			if(u.getUsername().equals(username)) {
 				exists = true;
+				user = u;
 				break;
 			}				
 		}
-		if(!exists)
+		if(!exists) {
+			System.out.println("Dodat u aktivne userse  "+ user);
 			activeUsers.add(user);
+//			userRequestsJMS.sendRequest("LoginNotify," + user.getUsername());
+		}
+		System.out.println("ACTIVE USERS AFTER ADDING " + activeUsers);
 	}
 	
 	@GET
@@ -47,6 +52,7 @@ public class UserController {
 		for(User u: activeUsers) {
 			if(u.getUsername().equals(username)) {
 				activeUsers.remove(u);
+//				userRequestsJMS.sendRequest("LogoutNotify," + u.getUsername());
 			}				
 		}
 	}

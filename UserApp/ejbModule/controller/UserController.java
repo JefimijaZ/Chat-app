@@ -6,21 +6,18 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.enterprise.context.SessionScoped;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import database.UserRepository;
+import message.UserResponseJMS;
 import model.ActiveUsers;
-import model.Host;
 import model.User;
 import service.ClusterService;
 
@@ -37,6 +34,9 @@ public class UserController {
 
 	@EJB
 	ActiveUsers activeUsers;
+	
+	@EJB
+	UserResponseJMS userresponseJMS;
 
 	@SessionScoped
 	User activeUser;
@@ -55,7 +55,7 @@ public class UserController {
 //		host.setAlias(clusterService.getHost(host));
 //		user.setHost(host);
 
-		System.out.println(user);
+//		System.out.println(user);
 		List<User> users = repository.getUsers();
 		for (User temp : activeUsers()) {
 			if (temp.getUsername().equals(user.getUsername())) {
@@ -67,6 +67,8 @@ public class UserController {
 			if (u.getUsername().equals(user.getUsername()) && u.getPassword().equals(user.getPassword())) {
 				activeUsers.login(user);
 				activeUser = user;
+				System.out.println("U i User + " + user + "           " + u.getUsername());
+				userresponseJMS.sendRequest("LoginNotify," + u.getUsername());
 				return true;
 			}
 		}
@@ -81,6 +83,7 @@ public class UserController {
 			if (temp.getUsername().equals(username)) {
 				activeUsers.logout(temp);
 				activeUser = null;
+				userresponseJMS.sendRequest("LogoutNotify," + temp.getUsername());
 				return true;
 			}
 		}

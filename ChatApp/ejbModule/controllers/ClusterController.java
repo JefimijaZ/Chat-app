@@ -27,6 +27,7 @@ public class ClusterController {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void add(Host host) {
+		System.out.println("GETTING REGISTERED" + host);
 		clusterService.add(host);
 	}
 	

@@ -77,17 +77,18 @@ public class UserRequest implements MessageListener {
 				retF = friendController.removeFriend(friendUsername, username);
 				userResponse.sendRequest("removeFriendResponse," + retF +  "," +text.split(",")[3] );
 				break;
-			case "getFriends":
+			case "getUserFriends":
 				username =  text.split(",")[1];
-				ArrayList<User> users = (ArrayList<User>) friendController.getFriends(username);
+				List<User> users = friendController.getFriends(username);
+				System.out.println("user friends are: " + users);
 				//TODO: Poslati listu usera
-//				userResponse.sendResponseList(users, text.split(",")[3]);
+				userResponse.sendResponseList(users, text.split(",")[2],3);
 //				userResponse.sendRequest("getFriendsResponse," + users + "," +text.split(",")[3]  );
 				break;
 			case "User":
 				username =  text.split(",")[1];
 				User ret = userController.getUser(username);
-				userResponse.sendRequest("UserResponse," + ret.toString() +  "," +text.split(",")[2] );
+				userResponse.sendResponseObject(ret,text.split(",")[2], 1 );
 				break;
 			case "Logout":				
 				username = text.split(",")[1];
@@ -99,7 +100,7 @@ public class UserRequest implements MessageListener {
 				List<User> searchUsers = userController.search(search);
 				System.out.println("split text criteria is-----------> " + text.split(",")[2] + " <------------------- ");
 				System.out.println("search criteria result is-----------> " + searchUsers + " <------------------- and size " + searchUsers.size());
-				userResponse.sendResponseList(searchUsers, text.split(",")[2]);
+				userResponse.sendResponseList(searchUsers, text.split(",")[2],2);
 //				userResponse.sendRequest("SearchResponse," + searchUsers + "," +text.split(",")[2] );
 				break;
 			default:

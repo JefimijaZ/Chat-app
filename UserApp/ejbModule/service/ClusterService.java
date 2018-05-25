@@ -25,13 +25,16 @@ public class ClusterService {
 	
 	public void add(Host host) {		
 		host.setAlias(++i+"");
+		System.out.println("hosts size values       " + hosts.values());
 		for(Host h: hosts.values()) {
+			System.out.println("address of the sender host: +++++++++++++" + h.getAddress());
 			((ResteasyWebTarget)ClientBuilder.newClient().
 					target("http://"+h.getAddress()+"/ChatAppWar/rest/cluster")).request().post(Entity.json(h));
 		}
 		
 		hosts.put(host.getAlias(), host);
-		System.out.println("registered");
+		
+		System.out.println("registered hostssss: " + hosts);
 	}
 
 	public void remove(String alias) {
@@ -43,7 +46,7 @@ public class ClusterService {
 	}
 	
 	public HashMap<String, Host> getHosts() {
-		System.out.println("GET HOSTS: " + hosts);
+		System.out.println("GET HOSTS in CLusterService: " + hosts);
 		return hosts;
 	}
 	
